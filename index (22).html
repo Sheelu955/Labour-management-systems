@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Patel Traders | Labor Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; background: #fffaf5; overflow: hidden;
+        }
+
+        /* 🕉️ ROTATING ASHOKA CHAKRA */
+        @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+        .chakra-bg {
+            position: fixed; top: 50%; left: 50%;
+            width: 800px; height: 800px; opacity: 0.05; z-index: 0; pointer-events: none;
+            animation: spin 120s linear infinite;
+        }
+
+        /* 🌅 SMOOTH PAGE TRANSITIONS */
+        .page-layer {
+            position: fixed; inset: 0; display: none; flex-direction: column;
+            align-items: center; justify-content: center; padding: 20px;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.7) 0%, rgba(255,248,235,0.8) 100%);
+            z-index: 10;
+        }
+        .page-layer.active { 
+            display: flex; 
+            animation: smoothFade 0.6s cubic-bezier(0.23, 1, 0.32, 1); 
+        }
+        @keyframes smoothFade { 
+            from { opacity: 0; transform: scale(0.98); } 
+            to { opacity: 1; transform: scale(1); } 
+        }
+
+        /* 💎 PREMIUM DATA CARDS & BUTTONS */
+        .main-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 40px 30px; width: 100%; max-width: 440px;
+            box-shadow: 0 40px 100px rgba(255, 153, 51, 0.08);
+            text-align: center;
+        }
+
+        .btn-giant {
+            position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1.5px solid rgba(255, 153, 51, 0.3);
+            border-radius: 22px; padding: 18px; width: 100%;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+        .btn-giant:hover {
+            background: linear-gradient(135deg, #ff9933, #cc5500);
+            color: white !important; border-color: transparent;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 153, 51, 0.4);
+        }
+
+        .portal-desc { font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; display: block; }
+        .btn-giant:hover .portal-desc { color: rgba(255,255,255,0.8); }
+
+        .disclaimer-box {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 25px; padding: 20px; margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg" class="chakra-bg">
+
+    <div id="view-welcome" class="page-layer active">
+        <div class="main-card">
+            <div class="mb-6">
+                <img src="https://i.ibb.co/C30Ybjck/PT-20250224-170650-0000.png" class="w-24 h-24 mx-auto rounded-[30px] shadow-2xl border-4 border-white">
+            </div>
+            <p class="text-[10px] font-black text-[#ff9933] uppercase tracking-[0.6em] mb-3">PATEL TRADERS</p>
+            <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter leading-none mb-10">
+                LABOR MANAGEMENT <br>
+                <span class="text-[#ff9933] italic">SYSTEM MS</span>
+            </h1>
+            <button onclick="showPage('view-selection')" class="btn-giant !bg-[#ff9933] !text-white !border-none !py-5 font-black uppercase text-xs tracking-widest">
+                Access System Hub →
+            </button>
+            <div class="mt-10 opacity-40"><p class="text-[8px] font-black uppercase tracking-widest">🇮🇳 Designed for Excellence</p></div>
+        </div>
+    </div>
+
+    <div id="view-selection" class="page-layer">
+        <div class="main-card">
+            <p class="text-[9px] font-black text-[#ff9933] uppercase tracking-[0.4em] mb-4">Centralized Gateway</p>
+            <h2 class="text-2xl font-black text-slate-800 uppercase mb-8 italic">Select Customer Type</h2>
+            
+            <div class="space-y-4 text-left">
+                <a href="https://sheelu955.github.io/Labour/" class="btn-giant block no-underline">
+                    <span class="flex items-center gap-3">
+                        <span class="text-xl">👨‍🔧</span>
+                        <span class="flex flex-col">
+                            <span class="text-[12px] font-black text-slate-800">Shramik Portal</span>
+                            <span class="portal-desc">For KYC, Identity & Salary Vault</span>
+                        </span>
+                    </span>
+                </a>
+                
+                <button onclick="showPage('view-disclaimer-admin')" class="btn-giant">
+                    <span class="flex items-center gap-3">
+                        <span class="text-xl">🛡️</span>
+                        <span class="flex flex-col text-left">
+                            <span class="text-[12px] font-black text-slate-800">Admin Console</span>
+                            <span class="portal-desc">For Payroll & Staff Management</span>
+                        </span>
+                    </span>
+                </button>
+
+                <button onclick="showPage('view-disclaimer-cms')" class="btn-giant">
+                    <span class="flex items-center gap-3">
+                        <span class="text-xl">📝</span>
+                        <span class="flex flex-col text-left">
+                            <span class="text-[12px] font-black text-slate-800">Complaint (CMS)</span>
+                            <span class="portal-desc">For Grievances & Support Requests</span>
+                        </span>
+                    </span>
+                </button>
+            </div>
+            
+            <div class="mt-10 space-y-6">
+                <a href="https://sheelu955.github.io/About-Patel-Traders-/" target="_blank" class="text-[9px] font-black text-[#ff9933] uppercase tracking-widest bg-[#ff9933]/5 px-6 py-3 rounded-full border border-[#ff9933]/10">About Patel Traders</a>
+                <button onclick="showPage('view-welcome')" class="block mx-auto text-[8px] font-black text-slate-400 uppercase tracking-[4px] pt-4">← Back to Welcome</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-disclaimer-admin" class="page-layer">
+        <div class="main-card border-red-500/10">
+            <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">⚠️</div>
+            <h3 class="text-[10px] font-black text-red-600 uppercase tracking-widest mb-6">Security Protocol: Management</h3>
+            <div class="disclaimer-box">
+                <p class="text-[10px] font-bold text-slate-600 leading-relaxed uppercase italic">
+                    Unauthorized access to the <span class="text-slate-900 font-black">Administrative Terminal</span> is strictly prohibited. If you are not an authorized manager of Patel Traders, please utilize the Shramik Portal. Any breach of this protocol will be logged and subject to disciplinary action.
+                </p>
+            </div>
+            <div class="space-y-4">
+                <a href="https://sheelu955.github.io/Labour-Admin/" class="btn-giant !bg-slate-900 !text-white !border-none block text-center font-black">Authorize & Continue</a>
+                <button onclick="showPage('view-selection')" class="text-[9px] font-black text-slate-400 uppercase tracking-widest">← Exit Terminal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-disclaimer-cms" class="page-layer">
+        <div class="main-card border-orange-500/10">
+            <div class="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">⚖️</div>
+            <h3 class="text-[10px] font-black text-orange-600 uppercase tracking-widest mb-6">User Policy: CMS Node</h3>
+            <div class="disclaimer-box">
+                <p class="text-[10px] font-bold text-slate-600 leading-relaxed uppercase italic">
+                    Attention: Access to the Administrative Hub within the CMS is restricted. If you are a client/customer, you must utilize the <span class="text-slate-900 font-black">Customer Portal</span>. Unauthorized attempts to access Admin functionalities are categorized as <span class="text-red-600 font-black">Illegal Practice</span> under company policy and digital security laws.
+                </p>
+            </div>
+            <div class="space-y-4">
+                <a href="https://sheelu955.github.io/CMS-COMPLAINT-MANAGEMENT-SYSTEM/" class="btn-giant !bg-[#ff9933] !text-white !border-none block text-center font-black">I Understand, Continue</a>
+                <button onclick="showPage('view-selection')" class="text-[9px] font-black text-slate-400 uppercase tracking-widest">← Return to Safety</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(id) {
+            document.querySelectorAll('.page-layer').forEach(p => {
+                p.classList.remove('active');
+                p.style.display = 'none'; 
+            });
+            const target = document.getElementById(id);
+            target.style.display = 'flex';
+            setTimeout(() => { target.classList.add('active'); }, 20);
+        }
+    </script>
+</body>
+</html>
