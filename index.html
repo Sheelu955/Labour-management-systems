@@ -3,338 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PT Admin Hub | Patel Traders</title>
+    <title>PT | Supreme Admin Hub</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap');
         
-        :root { --bhagwa: #ff9933; --bg-dark: #f8fafc; }
+        :root { 
+            --bhagwa: #ff9933; 
+            --bhagwa-dark: #cc5500; 
+            --bg-superdark: #03050a; 
+        }
         
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg-dark); 
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><circle cx="50" cy="50" r="45" stroke="%23000000" stroke-width="2" fill="none"/><path d="M50 5 L50 95 M5 50 L95 50 M18 18 L82 82 M18 82 L82 18 M32.5 8.5 L67.5 91.5 M8.5 32.5 L91.5 67.5 M8.5 67.5 L91.5 32.5 M32.5 91.5 L67.5 8.5" stroke="%23000000" stroke-width="1"/></svg>');
-            background-size: 80vw;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            color: #0f172a; 
+            background: var(--bg-superdark); 
+            color: #ffffff; 
             margin: 0; 
-            overflow: hidden; 
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            width: 100vw;
+            overflow: hidden; /* Prevents background scrolling */
         }
         
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* 🚀 Welcome Screen CSS */
-        .welcome-screen { 
-            position: absolute; inset: 0; z-index: 9999;
-            background: var(--bg-dark);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; 
+        /* 🌌 QUANTUM AURORA BACKGROUND */
+        .bg-aurora {
+            position: fixed; inset: 0; z-index: -2; background: var(--bg-superdark); overflow: hidden;
         }
+        .bg-aurora::after {
+            content: ''; position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(255, 153, 51, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 153, 51, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px; opacity: 0.5; z-index: -1;
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.35; animation: floatOrb 20s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 500px; height: 500px; background: var(--bhagwa); top: -10%; left: -10%; }
+        .orb-2 { width: 600px; height: 600px; background: #3b82f6; bottom: -20%; right: -10%; animation-delay: -5s; }
+        .orb-3 { width: 400px; height: 400px; background: #e11d48; top: 40%; left: 30%; animation-delay: -10s; }
+        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 100% { transform: translate(80px, 80px) scale(1.3) rotate(20deg); } }
 
-        /* 🔘 Buttons */
-        .btn-bhagwa { 
-            background: linear-gradient(135deg, #ff9933, #e65c00); 
-            color: #ffffff !important; 
-            font-weight: 800; text-transform: uppercase; border-radius: 12px; padding: 16px; width: 100%; cursor: pointer; border: none; 
-            box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4) !important; 
-            transition: 0.2s; letter-spacing: 1px; 
+        /* 🪟 GLASSMORPHISM UI */
+        .glass-card { 
+            background: rgba(15, 23, 42, 0.4); 
+            backdrop-filter: blur(25px); 
+            border: 1px solid rgba(255, 153, 51, 0.15); 
+            border-radius: 28px; 
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.02), 0 15px 40px rgba(0,0,0,0.6); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .btn-bhagwa:active { transform: scale(0.96); box-shadow: 0 4px 15px rgba(255, 153, 51, 0.3) !important; }
-
-        /* 🌐 Navigation Bar (Clean App Header) */
-        .browser-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            z-index: 50;
-            position: relative;
-        }
-
-        .nav-btn-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .nav-btn {
-            background: rgba(0, 0, 0, 0.03);
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #475569;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .nav-btn:hover { background: rgba(255, 153, 51, 0.1); color: var(--bhagwa); transform: translateY(-1px); }
-        .nav-btn:active { transform: scale(0.95); }
-
-        /* 🏠 Home Screen (Quick Links) */
-        .home-screen {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start; 
-            padding: 40px 20px 40px 20px; 
-            overflow-y: auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        .pt-card {
-            background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.04);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            z-index: 20;
-        }
-        .pt-card:hover {
+        .glass-card:hover {
             transform: translateY(-8px);
-            border-color: var(--bhagwa);
-            box-shadow: 0 15px 40px rgba(255, 153, 51, 0.2);
+            border-color: rgba(255, 153, 51, 0.4);
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.05), 0 20px 50px rgba(255, 153, 51, 0.2);
         }
 
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        /* 🖼️ Iframe Container */
-        #browserFrame {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: none;
-            background: #ffffff;
-        }
-
-        /* Loading Bar */
-        #loadingBar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: var(--bhagwa);
-            width: 0%;
-            transition: width 0.3s ease;
-            z-index: 100;
-            box-shadow: 0 0 10px var(--bhagwa);
+        .welcome-glass { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(40px); 
+            border: 1px solid rgba(255, 153, 51, 0.2); 
+            box-shadow: 0 30px 80px -10px rgba(255, 153, 51, 0.15); 
         }
         
-        /* Main Wrapper */
-        #view-main {
-            display: none;
-            flex-direction: column;
-            height: 100vh;
-            width: 100vw;
+        .hero-text-gradient { 
+            background: linear-gradient(135deg, #ffffff 40%, var(--bhagwa)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
         }
+
+        /* 🔘 BUTTONS */
+        .btn-bhagwa { 
+            background: linear-gradient(135deg, var(--bhagwa), var(--bhagwa-dark)); 
+            color: white; font-weight: 900; text-transform: uppercase; border-radius: 16px; padding: 20px; width: 100%; cursor: pointer; border: none; 
+            box-shadow: 0 10px 30px rgba(255, 153, 51, 0.3); transition: all 0.3s; letter-spacing: 2px;
+        }
+        .btn-bhagwa:hover { box-shadow: 0 15px 40px rgba(255, 153, 51, 0.6); transform: translateY(-2px) scale(1.02); }
+        .btn-bhagwa:active { transform: scale(0.97); }
+
+        /* 🎬 ANIMATIONS */
+        @keyframes popModal { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .animate-pop { animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
+
+        /* Custom Scrollbar for Modal */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--bhagwa); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="view-welcome" class="welcome-screen">
-        <div class="mb-8 animate-[fadeInDown_1s_ease-out]">
-            <img src="https://i.ibb.co/C30Ybjck/PT-20250224-170650-0000.png" class="w-28 mx-auto rounded-[35px] shadow-[0_15px_40px_rgba(255,153,51,0.3)] border border-[#ff9933]/20 mb-6" crossorigin="anonymous">
-            <h4 class="text-[#ff9933] font-black uppercase tracking-[5px] text-[10px] mb-2">Secure Admin Portal</h4>
-            <h1 class="text-4xl md:text-5xl font-black text-slate-900 uppercase italic leading-tight">Patel Traders</h1>
-        </div>
-        <button onclick="enterAdminHub()" class="btn-bhagwa px-12 py-4 tracking-[3px] max-w-xs">Access Hub →</button>
-    </div>
+<div class="bg-aurora">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
 
-    <div id="view-main">
+<div id="legal-modal" class="fixed inset-0 bg-black/80 backdrop-blur-2xl z-[99999] hidden flex-col items-center justify-center p-4 transition-opacity">
+    <div class="glass-card p-8 max-w-lg w-full text-center animate-pop" style="max-height: 85vh; display: flex; flex-direction: column;">
+        <div class="w-16 h-16 mx-auto bg-[#ff9933]/20 text-[#ff9933] rounded-full flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(255,153,51,0.3)]">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </div>
+        <h2 id="lm-title" class="text-2xl font-black uppercase tracking-widest mb-4 text-[#ff9933]">Document Title</h2>
         
-        <div id="loadingBar"></div>
-
-        <nav class="browser-nav">
-            <div class="nav-btn-group">
-                <button class="nav-btn" onclick="goBack()" title="Back">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                </button>
-                <button class="nav-btn" onclick="goForward()" title="Forward">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-                <button class="nav-btn" onclick="refreshPage()" title="Refresh">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-                </button>
-                <button class="nav-btn" onclick="goHome()" title="Admin Home">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
-                </button>
+        <div id="lm-content" class="text-xs text-white/70 font-medium mb-8 leading-relaxed text-left custom-scroll overflow-y-auto pr-3 flex-1">
             </div>
-            
-            <img src="https://i.ibb.co/C30Ybjck/PT-20250224-170650-0000.png" class="w-8 h-8 rounded-lg shadow-sm border border-slate-200" crossorigin="anonymous" title="Patel Traders">
-        </nav>
+        
+        <button onclick="closeLegalModal()" class="w-full py-4 bg-white/10 hover:bg-white/20 rounded-xl font-black text-white uppercase tracking-[3px] transition shadow-lg mt-auto">I Understand</button>
+    </div>
+</div>
 
-        <div id="homeScreen" class="home-screen custom-scrollbar">
-            <div class="text-center mb-10 w-full">
-                <img src="https://i.ibb.co/C30Ybjck/PT-20250224-170650-0000.png" class="w-20 md:w-24 mx-auto rounded-[25px] shadow-[0_15px_40px_rgba(255,153,51,0.3)] mb-4" crossorigin="anonymous">
-                <h4 class="text-[#ff9933] font-black uppercase tracking-[5px] text-[10px] md:text-[12px] mb-1">Central Management</h4>
-                <h1 class="text-3xl md:text-4xl font-black text-slate-900 uppercase italic">Admin Hub</h1>
-            </div>
+<div id="welcome-screen" class="fixed inset-0 z-[11000] bg-black/50 backdrop-blur-xl flex items-center justify-center p-4 transition-opacity duration-500">
+    <div class="welcome-glass p-10 md:p-14 rounded-[40px] text-center max-w-lg w-full border-t-4 border-[#ff9933] relative overflow-hidden">
+        <img src="https://i.ibb.co/C30Ybjck/PT-20250224-170650-0000.png" class="w-32 mx-auto mb-8 rounded-3xl border border-[#ff9933]/40 shadow-[0_0_40px_rgba(255,153,51,0.4)]" crossorigin="anonymous">
+        <h4 class="text-[#ff9933] font-bold text-[10px] tracking-[8px] uppercase mb-2">Supreme Command Center</h4>
+        <h1 class="text-5xl font-black uppercase tracking-tighter mb-10 hero-text-gradient italic">Patel Traders</h1>
+        
+        <button onclick="initializePortal()" class="btn-bhagwa flex items-center justify-center gap-3">
+            Initialize System 
+            <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </button>
+        <p class="text-white/20 text-[8px] mt-8 uppercase font-bold tracking-[4px]">Quantum Encrypted Gateway</p>
+    </div>
+</div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl px-4 pb-10">
-                
-                <div class="pt-card" onclick="loadURL('https://sheelu955.github.io/Admin-Gateway/')">
-                    <div class="icon-box" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);">
-                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-black uppercase text-slate-800">Admin Vault</h2>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">Billing & Management</p>
-                    </div>
-                </div>
 
-                <div class="pt-card" onclick="loadURL('https://sheelu955.github.io/CMS-COMPLAINT-MANAGEMENT-SYSTEM/')">
-                    <div class="icon-box" style="background: linear-gradient(135deg, #ef4444, #b91c1c); box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);">
-                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-black uppercase text-slate-800">CMS Portal</h2>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">Customer Complaints</p>
-                    </div>
-                </div>
-
+<div id="main-hub" class="hidden relative z-10 w-full h-screen flex flex-col justify-between p-6 md:p-10">
+    
+    <header class="flex justify-between items-center w-full max-w-6xl mx-auto animate-fade-up" style="animation-delay: 0.1s;">
+        <div class="flex items-center gap-4">
+            <img src="https://i.ibb.co/C30Ybjck/PT-20250224-170650-0000.png" class="w-14 h-14 rounded-2xl shadow-[0_0_20px_rgba(255,153,51,0.3)] border border-white/10" crossorigin="anonymous">
+            <div>
+                <h1 class="text-2xl font-black italic uppercase tracking-tighter text-white">Master <span class="text-[#ff9933]">Hub</span></h1>
+                <div class="flex items-center gap-2"><div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div><p class="text-[9px] text-emerald-500 font-black uppercase tracking-[3px]">Systems Online</p></div>
             </div>
         </div>
+        <button onclick="window.location.reload()" class="px-5 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-[9px] font-black uppercase tracking-widest text-white/50 hover:text-white transition border border-white/5">Refresh</button>
+    </header>
 
-        <iframe id="browserFrame" name="browserFrame"></iframe>
-    </div>
-
-    <script>
-        // 🚀 SEPARATE CACHE MEMORY FOR ADMIN
-        // Using "pt_admin_welcome_seen" instead of "pt_main_welcome_seen" to avoid conflicts with customer hub
-        window.addEventListener('DOMContentLoaded', () => {
-            if(localStorage.getItem('pt_admin_welcome_seen') === 'true') {
-                document.getElementById('view-welcome').style.display = 'none';
-                document.getElementById('view-main').style.display = 'flex';
-                
-                // Restore last session URL
-                const lastUrl = sessionStorage.getItem('pt_admin_hub_last_url');
-                if (lastUrl && lastUrl !== 'home') {
-                    loadURL(lastUrl, true);
-                }
-            }
-        });
-
-        // 🔘 Action to Enter Hub from Welcome Screen
-        function enterAdminHub() {
-            localStorage.setItem('pt_admin_welcome_seen', 'true'); // Save to Cache
-            document.getElementById('view-welcome').style.display = 'none';
-            document.getElementById('view-main').style.display = 'flex';
-        }
-
-        let historyStack = [];
-        let currentIdx = -1;
-        const frame = document.getElementById('browserFrame');
-        const homeScreen = document.getElementById('homeScreen');
-        const loadingBar = document.getElementById('loadingBar');
-
-        function simulateLoading() {
-            loadingBar.style.width = '0%';
-            loadingBar.style.display = 'block';
-            setTimeout(() => loadingBar.style.width = '30%', 100);
-            setTimeout(() => loadingBar.style.width = '70%', 500);
-            setTimeout(() => {
-                loadingBar.style.width = '100%';
-                setTimeout(() => { loadingBar.style.display = 'none'; }, 300);
-            }, 1000); 
-        }
-
-        function loadURL(url, isHistoryNav = false) {
-            simulateLoading();
-            homeScreen.style.display = 'none';
-            frame.style.display = 'block';
+    <main class="flex-1 flex items-center justify-center w-full max-w-6xl mx-auto my-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full">
             
-            // Load URL into frame
-            frame.src = url;
-            
-            // Update Session Cache
-            sessionStorage.setItem('pt_admin_hub_last_url', url);
+            <div onclick="launchApp('https://sheelu955.github.io/Admin-Gateway/')" class="glass-card p-10 md:p-14 flex flex-col items-center justify-center text-center cursor-pointer group animate-fade-up" style="animation-delay: 0.2s;">
+                <div class="w-28 h-28 bg-gradient-to-br from-[#ff9933]/20 to-transparent rounded-full flex items-center justify-center mb-8 border border-[#ff9933]/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-[0_0_40px_rgba(255,153,51,0.2)]">
+                    <svg class="w-12 h-12 text-[#ff9933]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <h2 class="text-3xl font-black uppercase text-white tracking-widest mb-3">Admin Vault</h2>
+                <p class="text-xs text-white/40 font-bold uppercase tracking-[2px] leading-relaxed">Master Invoice Engine &<br>Cloud Database Management</p>
+                <div class="mt-8 px-6 py-2 rounded-full bg-white/5 text-[9px] font-black text-[#ff9933] uppercase tracking-[3px] border border-white/5 group-hover:bg-[#ff9933] group-hover:text-white transition">Launch Portal →</div>
+            </div>
 
-            if (!isHistoryNav) {
-                historyStack = historyStack.slice(0, currentIdx + 1);
-                historyStack.push(url);
-                currentIdx++;
-            }
-        }
+            <div onclick="launchApp('https://sheelu955.github.io/CMS-COMPLAINT-MANAGEMENT-SYSTEM/')" class="glass-card p-10 md:p-14 flex flex-col items-center justify-center text-center cursor-pointer group animate-fade-up" style="animation-delay: 0.3s; border-color: rgba(59, 130, 246, 0.2);">
+                <div class="w-28 h-28 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full flex items-center justify-center mb-8 border border-blue-500/30 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 shadow-[0_0_40px_rgba(59,130,246,0.2)]">
+                    <svg class="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </div>
+                <h2 class="text-3xl font-black uppercase text-white tracking-widest mb-3">CMS Portal</h2>
+                <p class="text-xs text-white/40 font-bold uppercase tracking-[2px] leading-relaxed">Complaint Management &<br>Customer Resolution Center</p>
+                <div class="mt-8 px-6 py-2 rounded-full bg-white/5 text-[9px] font-black text-blue-400 uppercase tracking-[3px] border border-white/5 group-hover:bg-blue-500 group-hover:text-white transition">Launch Portal →</div>
+            </div>
 
-        function goHome() {
-            simulateLoading();
-            homeScreen.style.display = 'flex';
-            frame.style.display = 'none';
-            frame.src = '';
-            sessionStorage.setItem('pt_admin_hub_last_url', 'home');
-            
-            historyStack = historyStack.slice(0, currentIdx + 1);
-            historyStack.push('home');
-            currentIdx++;
-        }
+        </div>
+    </main>
 
-        function goBack() {
-            if (currentIdx > 0) {
-                currentIdx--;
-                let prevUrl = historyStack[currentIdx];
-                if (prevUrl === 'home') {
-                    goHomeState();
-                } else {
-                    loadURL(prevUrl, true);
-                }
-            }
-        }
+    <footer class="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/10 pt-6 pb-2 animate-fade-up" style="animation-delay: 0.4s;">
+        <p class="text-[9px] font-black text-white/30 uppercase tracking-[3px]">© 2026 Patel Traders</p>
+        
+        <div class="flex gap-6">
+            <button onclick="openLegal('disclaimer')" class="text-[9px] font-black text-white/40 hover:text-[#ff9933] uppercase tracking-[2px] transition">Disclaimer</button>
+            <button onclick="openLegal('terms')" class="text-[9px] font-black text-white/40 hover:text-[#ff9933] uppercase tracking-[2px] transition">Terms & Conditions</button>
+            <button onclick="openLegal('privacy')" class="text-[9px] font-black text-white/40 hover:text-[#ff9933] uppercase tracking-[2px] transition">Privacy Policy</button>
+        </div>
+    </footer>
 
-        function goForward() {
-            if (currentIdx < historyStack.length - 1) {
-                currentIdx++;
-                let nextUrl = historyStack[currentIdx];
-                if (nextUrl === 'home') {
-                    goHomeState();
-                } else {
-                    loadURL(nextUrl, true);
-                }
-            }
-        }
+</div>
 
-        function goHomeState() {
-            homeScreen.style.display = 'flex';
-            frame.style.display = 'none';
-            frame.src = '';
-            sessionStorage.setItem('pt_admin_hub_last_url', 'home');
+<script>
+    // 🧠 1. CACHE MEMORY LOGIC
+    window.addEventListener('DOMContentLoaded', () => {
+        // Check if user has already passed the welcome screen
+        if(localStorage.getItem('pt_supreme_hub_welcome') === 'true') {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-hub').classList.remove('hidden');
         }
+    });
 
-        function refreshPage() {
-            if (frame.style.display === 'block') {
-                simulateLoading();
-                let currentUrl = frame.src;
-                frame.src = currentUrl; 
-            }
+    function initializePortal() {
+        // Save to cache so it never shows again
+        localStorage.setItem('pt_supreme_hub_welcome', 'true'); 
+        
+        // Smooth transition
+        document.getElementById('welcome-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-hub').classList.remove('hidden');
+        }, 500);
+    }
+
+    // 🚀 2. APP LAUNCHER
+    function launchApp(url) {
+        // Opens the requested portal in the same tab smoothly
+        window.location.href = url;
+    }
+
+    // ⚖️ 3. LEGAL DOCUMENTS DATA & MODAL LOGIC
+    const legalDocs = {
+        'disclaimer': {
+            title: "System Disclaimer",
+            content: `
+                <p class="mb-4"><strong class="text-white">1. Authorized Access Only:</strong> This portal is strictly for the authorized administrators of Patel Traders. Any unauthorized attempt to breach, hack, or access this system will be logged and reported.</p>
+                <p class="mb-4"><strong class="text-white">2. Data Accuracy:</strong> The system automatically processes invoices and complaints based on manual inputs. The administrator is solely responsible for verifying the amounts before finalizing.</p>
+                <p><strong class="text-white">3. Network Security:</strong> This environment operates on a secured framework. Do not share your Master PIN or Admin Hub URL with anyone, including staff members without clearance.</p>
+            `
+        },
+        'terms': {
+            title: "Terms & Conditions",
+            content: `
+                <p class="mb-4"><strong class="text-white">1. Service Scope:</strong> Patel Traders provides a digital management system for generating physical/digital furniture bills and handling customer complaints.</p>
+                <p class="mb-4"><strong class="text-white">2. Invoicing Validity:</strong> A generated receipt is valid only if it remains unmodified. Any digital tampering by the customer renders the warranty and bill null and void.</p>
+                <p class="mb-4"><strong class="text-white">3. System Modifications:</strong> The architecture and source code of this Master Hub are proprietary. Modifications are executed exclusively by the authorized developer.</p>
+                <p><strong class="text-white">4. Jurisdiction:</strong> All digital transactions and disputes fall under the local jurisdiction of Kannauj (U.P.).</p>
+            `
+        },
+        'privacy': {
+            title: "Privacy Policy",
+            content: `
+                <p class="mb-4"><strong class="text-white">1. Data Collection:</strong> We collect essential customer information (Name, Phone Number, Purchase Details) solely for the purpose of invoicing, delivery, and warranty validation.</p>
+                <p class="mb-4"><strong class="text-white">2. Cloud Storage:</strong> Data is encrypted and stored securely on Google Cloud infrastructure. Patel Traders does not sell, rent, or expose customer data to third-party marketing agencies.</p>
+                <p class="mb-4"><strong class="text-white">3. Cache Memory:</strong> This application utilizes local device storage (Cache/Local Storage) to remember authentication states and improve load speeds. Clearing your browser cache will reset these preferences.</p>
+                <p><strong class="text-white">4. Administrator Responsibility:</strong> Admins must ensure the device used to access this portal is free from malware or screen-recording software to protect customer privacy.</p>
+            `
         }
-    </script>
+    };
+
+    function openLegal(docType) {
+        const doc = legalDocs[docType];
+        document.getElementById('lm-title').innerText = doc.title;
+        document.getElementById('lm-content').innerHTML = doc.content;
+        
+        const modal = document.getElementById('legal-modal');
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.remove('opacity-0'), 10);
+    }
+
+    function closeLegalModal() {
+        const modal = document.getElementById('legal-modal');
+        modal.classList.add('opacity-0');
+        setTimeout(() => modal.style.display = 'none', 400);
+    }
+</script>
+
 </body>
 </html>
